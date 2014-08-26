@@ -1,0 +1,12 @@
+{
+    "name": "realtime-installed-base",
+    "version": "0.0.1", 
+    "main": "server.js",
+    "dependencies": {
+        "express": "~4.8.5",
+        "jade": "*",
+        "mongoose": "~3.8.15",
+        "body-parser": "~1.6.5",
+        "method-override": "~2.1.3"
+    }
+}

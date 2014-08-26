@@ -1,0 +1,21 @@
+doctype
+html(ng-app='realtime-installed-base')
+  meta(charset='utf-8')
+  title Spares and RIB
+  link(rel='stylesheet', href='bower_modules/bootstrap/dist/css/bootstrap.min.css')
+  script(src='bower_modules/angular/angular.min.js')
+  script(src='bower_modules/angular-route/angular-route.min.js')
+  script(src='javascript/controllers/MainCtrl.js')
+  script(src='javascript/controllers/CustomerCtrl.js')
+  script(src='javascript/services/CustomerService.js')
+  script(src='javascript/routes.js')
+  script(src='javascript/application.js')
+body
+  nav(class='navbar navbar-inverse')
+    #navbar-header
+      a(class='navbar-brand' href='/') Spares and RIB
+
+    ul(class='nav navbar-nav')
+      li: a(href='/customers') Customers
+
+  div(ng-view)

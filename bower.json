@@ -1,0 +1,10 @@
+{
+    "name": "realtime-installed-base",
+    "version": "0.0.1",
+    "dependencies": {
+        "bootstrap": "latest",
+        "animate.css": "latest",
+        "angular": "latest",
+        "angular-route": "latest"
+    }
+}
