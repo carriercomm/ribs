@@ -13,7 +13,7 @@
 
 ## Running the application
 
-- Start a mongodb process
+- Start a mongodb process, preferably by running mongodb as a service (net start mongodb)
 - Run `grunt` from the top level project directory
 
 Your page should now be accessible on localhost:3000
