@@ -12,5 +12,5 @@ angular.module('CustomerCtrl', []).controller('CustomerController', function($sc
             $scope.formData = {};
             $scope.customers = data;
         });
-    }
+    };
 });

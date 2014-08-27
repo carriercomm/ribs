@@ -11,5 +11,5 @@ angular.module('CustomerService', []).factory('Customers', ['$http', function($h
         delete: function(customerID) {
             return $http.delete('/api/customers' + customerID);
         }
-    }
+    };
 }]);
