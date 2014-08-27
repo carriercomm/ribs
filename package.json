@@ -15,6 +15,7 @@
     "devDependencies": {
         "grunt-cli": "latest",
         "grunt-nodemon": "latest",
-        "grunt-contrib-jshint": "latest"
+        "grunt-contrib-jshint": "latest",
+        "grunt-contrib-uglify": "latest"
     }
 }

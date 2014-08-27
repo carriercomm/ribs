@@ -1,4 +1,4 @@
-angular.module('CustomerCtrl', []).controller('CustomerController', function($scope, $http, Customers) {
+angular.module('CustomerCtrl', []).controller('CustomerController', ['$scope', '$http', 'Customers', function($scope, $http, Customers) {
     $scope.formData = {};
 
     Customers.get()
@@ -13,4 +13,4 @@ angular.module('CustomerCtrl', []).controller('CustomerController', function($sc
             $scope.customers = data;
         });
     };
-});
+}]);
