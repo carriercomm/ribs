@@ -18,6 +18,8 @@
         "grunt-concurrent": "latest",
         "grunt-contrib-jshint": "latest",
         "grunt-contrib-uglify": "latest",
-        "grunt-contrib-watch": "latest"
+        "grunt-contrib-watch": "latest",
+        "grunt-contrib-clean": "latest",
+        "grunt-html2js": "latest"
     }
 }

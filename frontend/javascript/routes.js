@@ -1,11 +1,11 @@
-angular.module('Routes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('Routes', ['templates-main']).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'views/home.html',
+            templateUrl: 'views/home.tmpl.html',
             controller: 'MainController'
         })
         .when('/customers', {
-            templateUrl: 'views/customers.html',
+            templateUrl: 'views/customers.tmpl.html',
             controller: 'CustomerController'
         });
 
