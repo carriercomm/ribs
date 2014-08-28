@@ -1,4 +1,4 @@
-angular.module('ribs.controller.customer', []).controller('CustomerController', ['$scope', '$http', 'Customers', function($scope, $http, Customers) {
+angular.module('ribs.controller.customer', []).controller('CustomerController', ['$scope', 'Customers', function($scope, Customers) {
     $scope.formData = {};
 
     Customers.get()

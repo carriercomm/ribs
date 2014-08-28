@@ -4,6 +4,10 @@ angular.module('ribs.service.customer', []).factory('Customers', ['$http', funct
             return $http.get('/api/customers');
         },
 
+        getCustomerDetail: function(customerID) {
+            return $http.get('/api/customers/' + customerID);
+        },
+
         create: function(customerData) {
             return $http.post('/api/customers', customerData);
         },

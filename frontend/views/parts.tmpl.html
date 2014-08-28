@@ -1,0 +1,39 @@
+<div class="jumbotron text-center">
+    <h1>Parts</h1>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>12NC</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="part in parts">
+            <td class="col-md-3">{{part.twelveNc}}</td>
+            <td>{{part.name}}</td>
+            <td>{{part.description}}</td>
+            <td><img src=""></img></td>
+            <td class="col-md-1"><button type="button" class="btn btn-danger btn-xs" ng-click="deletePart(part)"><span class="glyphicon glyphicon-trash"></span>Remove</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="part-form" class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+        <form name="partsform">
+            <div class="form-group">
+                <input type="text" class="form-control input-lg text-center" placeholder="Part 12NC" ng-model="newPart.twelveNc" name="twelveNc">
+                <div ng-show="partsform.twelveNc.$error.mongoose", class="has-error">{{partsform.twelveNc.$error.mongoose}}</div>
+                <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="newPart.name">
+                <input type="text" class="form-control input-lg text-center" placeholder="Description" ng-model="newPart.description">
+            </div>
+
+            <button type="button" class="btn btn-primary btn-lg" ng-click="createPart(parts-form)">Add</button>
+        </form>
+    </div>
+</div>
