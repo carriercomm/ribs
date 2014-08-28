@@ -18,7 +18,6 @@ module.exports = function(application) {
             if (error)
                 result.send(error);
 
-            // get and return all the customers after you create another
             Customer.find(function(error, customers) {
                 if (error) result.send(error);
                 result.json(customers);
@@ -27,6 +26,17 @@ module.exports = function(application) {
     });
 
     application.delete('/api/customers/:customer_id', function(request, result) {
+        Customer.remove({
+            _id : request.params.customer_id
+        }, function(error, customer) {
+            if (error)
+                result.send(error);
+
+            Customer.find(function(error, customers) {
+                if (error) result.send(error);
+                result.json(customers);
+            });
+        });
     });
 
     application.get('/api/uniquedevice', function(request, result) {

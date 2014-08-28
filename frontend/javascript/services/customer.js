@@ -9,7 +9,7 @@ angular.module('ribs.service.customer', []).factory('Customers', ['$http', funct
         },
 
         delete: function(customerID) {
-            return $http.delete('/api/customers' + customerID);
+            return $http.delete('/api/customers/' + customerID);
         }
     };
 }]);

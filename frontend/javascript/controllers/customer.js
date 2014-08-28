@@ -13,4 +13,12 @@ angular.module('ribs.controller.customer', []).controller('CustomerController', 
             $scope.customers = data;
         });
     };
+
+    $scope.deleteCustomer = function(customer) {
+      Customers.delete(customer._id)
+        .success(function(data) {
+            $scope.formData = {};
+            $scope.customers = data;
+        });
+    };
 }]);
