@@ -1,4 +1,4 @@
-angular.module('Routes', ['templates-main']).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('ribs.routes', ['templates-main']).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'views/home.tmpl.html',

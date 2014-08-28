@@ -1,4 +1,4 @@
-angular.module('CustomerService', []).factory('Customers', ['$http', function($http) {
+angular.module('ribs.service.customer', []).factory('Customers', ['$http', function($http) {
     return {
         get: function() {
             return $http.get('/api/customers');

@@ -2,5 +2,5 @@
 node_modules/
 frontend/bower_modules/
 frontend/ribs.min.js
-.bower-*
+.bower*
 npm-debug.log
