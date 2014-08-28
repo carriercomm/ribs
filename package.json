@@ -13,7 +13,8 @@
         "method-override": "~2.1.3"
     },
     "devDependencies": {
-        "grunt-cli": "latest",
+        "grunt": "latest",
+        "grunt-bower-task": "latest",
         "grunt-nodemon": "latest",
         "grunt-concurrent": "latest",
         "grunt-contrib-jshint": "latest",

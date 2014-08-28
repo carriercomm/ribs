@@ -2,6 +2,14 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        bower: {
+            install: {
+                options: {
+                    targetDir: 'frontend/bower_modules'
+                }
+            }
+        },
+
         jshint: {
             all: ['frontend/javascript/**/*.js'],
         },
@@ -55,6 +63,7 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-html2js');
@@ -63,5 +72,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('default', ['jshint', 'html2js', 'uglify', 'clean', 'concurrent']);
+    grunt.registerTask('default', ['bower', 'jshint', 'html2js', 'uglify', 'clean', 'concurrent']);
 };
