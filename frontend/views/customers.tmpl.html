@@ -1,19 +1,37 @@
 <div class="jumbotron text-center">
     <h1>Customers</h1>
+</div>
 
-    <p ng-repeat="customer in customers">{{ customer.name }}</p>
+<table class="table table-striped">
+    <caption>Customers</caption>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="customer in customers">
+            <td><a href="/customers/{{customer._id}}">{{customer.name}}</a></td>
+            <td>{{customer.coutry}}</td>
+        </tr>
+    </tbody>
+</table>
 
-    <div id="customer-form" class="row">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
-            <form>
-                <div class="form-group">
+<ul class="customers table table-striped table-condensed">
+    <li ng-repeat="customer in customers">
+        <a href="/customers/{{customer._id}}">{{customer.name}}</a>
+    </li>
+</ul>
 
-                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                    <input type="text" class="form-control input-lg text-center" placeholder="Elkerliek" ng-model="formData.text">
-                </div>
+<div id="customer-form" class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control input-lg text-center" placeholder="Customer name" ng-model="formData.text">
+            </div>
 
-                <button type="submit" class="btn btn-primary btn-lg" ng-click="createCustomer()">Add</button>
-            </form>
-        </div>
+            <button type="submit" class="btn btn-primary btn-lg" ng-click="createCustomer()">Add</button>
+        </form>
     </div>
 </div>

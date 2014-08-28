@@ -1,17 +1,49 @@
-doctype
-html(ng-app='ribs')
-  meta(charset='utf-8')
-  title RIBS - Realtime Installed Base
-  link(rel='stylesheet', href='bower_modules/bootstrap/dist/css/bootstrap.min.css')
-  script(src='bower_modules/angular/angular.min.js')
-  script(src='bower_modules/angular-route/angular-route.min.js')
-  script(src='ribs.min.js')
-body
-  nav(class='navbar navbar-inverse')
-    #navbar-header
-      a(class='navbar-brand' href='/') RIBS
+extend layout
 
-    ul(class='nav navbar-nav')
-      li: a(href='/customers') Customers
+block navigation
+    .navbar.navbar-inverse.navbar-fixed-top(role="navigation")
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') RIBS
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='#') Home
+            li
+              a(href='/customers') Customers
+            li
+              a(href='/parts') Parts
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                | Dropdown
+                b.caret
+              ul.dropdown-menu
+                li
+                  a(href='#') Action
+                li
+                  a(href='#') Another action
+                li
+                  a(href='#') Something else here
+                li.divider
+                li.dropdown-header Nav header
+                li
+                  a(href='#') Separated link
+                li
+                  a(href='#') One more separated link
+          ul.nav.navbar-nav.navbar-right
+            form.navbar-form
+            .input-group
+                input(type='text', placeholder='Search...').form-control
 
-  div(ng-view)
+block main-content
+    .container
+        div(ng-view)
+
+append bottom-script
+    script(src='bower_modules/angular/angular.min.js')
+    script(src='bower_modules/angular-route/angular-route.min.js')
+    script(src='ribs.min.js')
