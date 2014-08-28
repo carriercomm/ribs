@@ -41,11 +41,11 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: ['frontend/javascript/**/*.js'],
-                tasks: ['jshint', 'html2js', 'clean', 'uglify']
+                tasks: ['jshint', 'html2js', 'uglify', 'clean']
             },
             html: {
                 files: ['frontend/views/*.html', 'frontend/views/*.jade'],
-                tasks: ['html2js', 'clean', 'uglify']
+                tasks: ['html2js', 'uglify', 'clean']
             }
         },
 
