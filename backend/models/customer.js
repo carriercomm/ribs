@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var CustomerSchema = new Schema({
     name: String,
     location: [],
+    devices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UniqueDevice' }],
     country: String
 });
 

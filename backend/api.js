@@ -1,6 +1,7 @@
 'use strict';
 
 var Customer = require('./models/customer');
+var UniqueDevice = require('./models/uniquedevice');
 
 module.exports = function(application) {
     application.get('/api/customers', function(request, result) {
@@ -27,4 +28,11 @@ module.exports = function(application) {
 
     application.delete('/api/customers/:customer_id', function(request, result) {
     });
+
+    application.get('/api/uniquedevice', function(request, result) {
+        UniqueDevice.find(function(error, uniquedevice) {
+            if (error) result.send(error);
+            result.json(uniquedevice);
+        });
+    });    
 }
