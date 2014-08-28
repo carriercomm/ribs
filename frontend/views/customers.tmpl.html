@@ -3,7 +3,6 @@
 </div>
 
 <table class="table table-striped">
-    <caption>Customers</caption>
     <thead>
         <tr>
             <th>Name</th>
@@ -17,12 +16,6 @@
         </tr>
     </tbody>
 </table>
-
-<ul class="customers table table-striped table-condensed">
-    <li ng-repeat="customer in customers">
-        <a href="/customers/{{customer._id}}">{{customer.name}}</a>
-    </li>
-</ul>
 
 <div id="customer-form" class="row">
     <div class="col-sm-8 col-sm-offset-2 text-center">

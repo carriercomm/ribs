@@ -1,4 +1,5 @@
 var controllers = ['ribs.controller.main',
+				   'ribs.controller.navigation',
                    'ribs.controller.customer'];
 
 var services = ['ribs.service.customer'];
