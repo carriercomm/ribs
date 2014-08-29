@@ -1,7 +1,8 @@
 'use strict';
 
 var Customer = require('./models/customer');
-var Parts = require('./models/parttype');
+var Materials = require('./models/materialtype');
+var Material = require('./models/material');
 var UniqueDevice = require('./models/uniquedevice');
 
 module.exports = function(application) {
@@ -21,15 +22,16 @@ module.exports = function(application) {
 
     application.post('/api/customers', function(request, result) {
         Customer.create({
-            name : request.body.text
+            name : request.body.text,
         }, function(error, customer) {
-            if (error)
+            if (error) {
                 result.send(error);
-
-            Customer.find(function(error, customers) {
-                if (error) result.send(error);
-                result.json(customers);
-            });
+            } else {
+                Customer.find(function(error, customers) {
+                    if (error) result.send(error);
+                    result.json(customers);
+                });
+            }
         });
     });
 
@@ -48,7 +50,7 @@ module.exports = function(application) {
     });
 
     application.get('/api/parts', function(request, result) {
-        Parts.find(function(error, parts) {
+        Materials.find(function(error, parts) {
             if (error) {
                 result.send(error);
             } else {
@@ -60,15 +62,15 @@ module.exports = function(application) {
     application.post('/api/parts', function(request, result) {
         var part = request.body.part;
 
-        Parts.create({
-            twelveNc : part.twelveNc,
-            name: part.name,
-            description: part.description
+        Materials.create({
+            materialNumber : part.twelveNc,
+            materialName: part.name,
+            materialDescription: part.description
         }, function(error, part) {
             if (error) {
                 result.json({ error: error });
             } else {
-                Parts.find(function(error, parts) {
+                Materials.find(function(error, parts) {
                     if (error) result.send(error);
                     result.json(parts);
                 });

@@ -14,9 +14,9 @@
     </thead>
     <tbody>
         <tr ng-repeat="part in parts">
-            <td class="col-md-3">{{part.twelveNc}}</td>
-            <td>{{part.name}}</td>
-            <td>{{part.description}}</td>
+            <td class="col-md-3">{{part.materialNumber}}</td>
+            <td>{{part.materialName}}</td>
+            <td>{{part.materialDescription}}</td>
             <td><img src=""></img></td>
             <td class="col-md-1"><button type="button" class="btn btn-danger btn-xs" ng-click="deletePart(part)"><span class="glyphicon glyphicon-trash"></span>Remove</button></td>
         </tr>
