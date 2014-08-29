@@ -7,7 +7,7 @@ var CustomerSchema = new Schema({
     HospitalName: { type: String, required: true },
     CountryName: { type: String },
     City: { type: String },
-    Location: [], // WGS84 Coordinate [ lon, lat ]
+    Location: [Number], // WGS84 Coordinate [ lon, lat ]
 });
 
 module.exports = mongoose.model('Customer', CustomerSchema, 'Customer');
