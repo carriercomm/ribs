@@ -2,7 +2,8 @@
 
 var Customer = require('./models/customer');
 var System = require('./models/system');
-var Ownership = require('./models/ownership')
+var Ownership = require('./models/ownership');
+var MaterialPlacement = require('./models/materialplacement');
 
 var Materials = require('./models/materialtype');
 var Material = require('./models/material');
@@ -60,6 +61,18 @@ module.exports = function(application) {
                 if (error) result.send(error);
                 result.json(customers);
             });
+        });
+    });
+
+    application.get('/api/materials/:system_serial', function(request, result) {
+        MaterialPlacement.where({
+            SerialNumber_System: request.params.system_serial
+        }).exec(function(error, material) {
+            if (error) {
+                result.send(error);
+            } else {
+                result.json(material);
+            }
         });
     });
 

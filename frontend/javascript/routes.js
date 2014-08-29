@@ -16,6 +16,10 @@ angular.module('ribs.routes', ['templates-main']).config(['$routeProvider', '$lo
             templateUrl: 'views/parts.tmpl.html',
             controller: 'PartController'
         })
+        .when('/materials/:materialID', {
+            templateUrl: 'views/materials.tmpl.html',
+            controller: 'MaterialController'
+        })
         .otherwise({
             templateUrl: 'views/home.tmpl.html',
             controller: 'MainController'
