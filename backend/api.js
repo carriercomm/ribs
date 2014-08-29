@@ -21,7 +21,12 @@ module.exports = function(application) {
             if (error) { result.send(error); }
             var output = {};
             Ownership.find({ HospitalName : customer.HospitalName }, function(error, ownership) {
-                System.find({ SerialNumber_System : ownership[0].SerialNumber_System }, function(error, system) {
+                var serialNumbers = [];
+                for (var i in ownership) {
+                    serialNumbers.push(ownership[i].SerialNumber_System);
+                }
+
+                System.where('SerialNumber_System').in(serialNumbers).exec(function(error, system) {
                     var foundResult = { customer: customer, systems: system };
                     result.json(foundResult);
                 });
