@@ -2,7 +2,18 @@ body {
   padding-top: 50px;
 }
 
-.angular-google-map-container 
+.map
 { 
-    height: 400px; 
+    height: 700px; 
+}
+
+#map
+{ 
+    height: 700px; 
+}
+
+.infoWindowContent {
+    font-size:  12px !important;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
 }
