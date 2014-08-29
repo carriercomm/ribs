@@ -1,6 +1,9 @@
 'use strict';
 
 var Customer = require('./models/customer');
+var System = require('./models/system');
+var Ownership = require('./models/ownership')
+
 var Materials = require('./models/materialtype');
 var Material = require('./models/material');
 var UniqueDevice = require('./models/uniquedevice');
@@ -15,8 +18,14 @@ module.exports = function(application) {
 
     application.get('/api/customers/:customer_id', function(request, result) {
         Customer.findOne({ _id : request.params.customer_id }, function(error, customer) {
-            if (error) result.send(error);
-            result.json(customer);
+            if (error) { result.send(error); }
+            var output = {};
+            Ownership.find({ HospitalName : customer.HospitalName }, function(error, ownership) {
+                System.find({ SerialNumber_System : ownership[0].SerialNumber_System }, function(error, system) {
+                    var foundResult = { customer: customer, systems: system };
+                    result.json(foundResult);
+                });
+            });
         });
     });
 

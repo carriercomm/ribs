@@ -1,3 +1,22 @@
 <div class="jumbotron text-center">
-    <h1>{{customer.name}}</h1>
+    <h1>{{customer.customer.HospitalName}}</h1>
+
+	<table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th>Serial Number</th>
+	            <th>System Code</th>
+	            <th>Delivery Date</th>
+	            <th></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="system in customer.systems">
+	            <td class="col-md-5">{{system.SerialNumber_System}}</a></td>
+	            <td>{{system.SystemCode}}</td>
+	            <td>{{system.DeliveryDate}}</td>
+	            <td class="col-md-1"><button type="button" class="btn btn-danger btn-xs" ng-click=""><span class="glyphicon glyphicon-trash"></span>Remove</button></td>
+	        </tr>
+	    </tbody>
+	</table>
 </div>
