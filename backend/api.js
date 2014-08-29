@@ -2,7 +2,8 @@
 
 var Customer = require('./models/customer');
 var System = require('./models/system');
-var Ownership = require('./models/ownership')
+var Ownership = require('./models/ownership');
+var MaterialPlacement = require('./models/materialplacement');
 
 var Materials = require('./models/materialtype');
 var Material = require('./models/material');
@@ -21,7 +22,12 @@ module.exports = function(application) {
             if (error) { result.send(error); }
             var output = {};
             Ownership.find({ HospitalName : customer.HospitalName }, function(error, ownership) {
-                System.find({ SerialNumber_System : ownership[0].SerialNumber_System }, function(error, system) {
+                var serialNumbers = [];
+                for (var i in ownership) {
+                    serialNumbers.push(ownership[i].SerialNumber_System);
+                }
+
+                System.where('SerialNumber_System').in(serialNumbers).exec(function(error, system) {
                     var foundResult = { customer: customer, systems: system };
                     result.json(foundResult);
                 });
@@ -55,6 +61,18 @@ module.exports = function(application) {
                 if (error) result.send(error);
                 result.json(customers);
             });
+        });
+    });
+
+    application.get('/api/materials/:system_serial', function(request, result) {
+        MaterialPlacement.where({
+            SerialNumber_System: request.params.system_serial
+        }).exec(function(error, material) {
+            if (error) {
+                result.send(error);
+            } else {
+                result.json(material);
+            }
         });
     });
 

@@ -4,7 +4,7 @@
 	<table class="table table-striped">
 	    <thead>
 	        <tr>
-	            <th>Serial Number</th>
+	            <th class="col-md-2">Serial Number</th>
 	            <th>System Code</th>
 	            <th>Delivery Date</th>
 	            <th></th>
@@ -12,7 +12,7 @@
 	    </thead>
 	    <tbody>
 	        <tr ng-repeat="system in customer.systems">
-	            <td class="col-md-5">{{system.SerialNumber_System}}</a></td>
+	            <td class="col-md-2"><a href="/materials/{{system.SerialNumber_System}}">{{system.SerialNumber_System}}</a></td>
 	            <td>{{system.SystemCode}}</td>
 	            <td>{{system.DeliveryDate}}</td>
 	            <td class="col-md-1"><button type="button" class="btn btn-danger btn-xs" ng-click=""><span class="glyphicon glyphicon-trash"></span>Remove</button></td>

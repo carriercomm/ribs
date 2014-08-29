@@ -1,0 +1,21 @@
+<div class="jumbotron text-center">
+    <h1>Hello, materials!</h1>
+    <table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th class="col-md-2">Serial Number</th>
+	            <th>Material Number</th>
+	            <th>Placed Date</th>
+	            <th></th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="material in materials">
+	            <td class="col-md-2">{{material.SerialNumber_Material}}</td>
+	            <td>{{material.MaterialNumber}}</td>
+	            <td>{{material.PlacedDate}}</td>
+	            <td class="col-md-1"><button type="button" class="btn btn-danger btn-xs" ng-click=""><span class="glyphicon glyphicon-trash"></span>Replace</button></td>
+	        </tr>
+	    </tbody>
+	</table>
+</div>
