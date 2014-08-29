@@ -8,6 +8,7 @@
             <th>Name</th>
             <th>Country</th>
             <th>City</th>
+            <th>Location</th>
             <th></th>
         </tr>
     </thead>
@@ -16,6 +17,7 @@
             <td class="col-md-5"><a href="/customers/{{customer._id}}">{{customer.HospitalName}}</a></td>
             <td>{{customer.CountryName}}</td>
             <td>{{customer.City}}</td>
+            <td>{{customer.Location}}</td>
             <td class="col-md-1"><button type="button" class="btn btn-danger btn-xs" ng-click="deleteCustomer(customer)"><span class="glyphicon glyphicon-trash"></span>Remove</button></td>
         </tr>
     </tbody>

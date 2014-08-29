@@ -35,6 +35,19 @@ module.exports = function(application) {
         });
     });
 
+    application.post('/api/customers/:customer_id', function(request, result) {
+        Customer.findByIdAndUpdate( request.params.customer_id, request.body, function(error, customer) {
+            if (error) { 
+				console.log(error);
+				result.send(error); 
+			}
+            else {
+                console.log(customer);
+                result.json(customer);
+            }
+        });
+    });    
+    
     application.post('/api/customers', function(request, result) {
         Customer.create({
             name : request.body.text,
