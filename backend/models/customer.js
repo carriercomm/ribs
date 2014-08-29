@@ -3,13 +3,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var System = require('./system')
-
 var CustomerSchema = new Schema({
-    name: { type: String, required: true },
-    country: { type: String },
-    location: [], // WGS84 Coordinate [ lon, lat ]
-    systems: [{ type: System }],
+    HospitalName: { type: String, required: true },
+    CountryName: { type: String },
+    City: { type: String },
+    Location: [], // WGS84 Coordinate [ lon, lat ]
 });
 
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('Customer', CustomerSchema, 'Customer');
