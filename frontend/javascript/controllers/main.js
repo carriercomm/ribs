@@ -1,38 +1,20 @@
-    var cities = [
-    {
-        city : 'Toronto',
-        desc : 'This is the best city in the world!',
-        lat : 43.7000,
-        long : -79.4000
-    },
-    {
-        city : 'New York',
-        desc : 'This city is aiiiiite!',
-        lat : 40.6700,
-        long : -73.9400
-    },
-    {
-        city : 'Chicago',
-        desc : 'This is the second best city in the world!',
-        lat : 41.8819,
-        long : -87.6278
-    },
-    {
-        city : 'Los Angeles',
-        desc : 'This city is live!',
-        lat : 34.0500,
-        long : -118.2500
-    },
-    {
-        city : 'Las Vegas',
-        desc : 'Sin City...\'nuff said!',
-        lat : 36.0800,
-        long : -115.1522
-    }];
-    
-
-angular.module('ribs.controller.main', ['google-maps']).controller('MainController', ['$scope', function($scope) {
+angular.module('ribs.controller.main', ['google-maps']).controller('MainController', ['$scope', '$routeParams', 'Customers', function($scope, $routeParams, Customers) {
     $scope.tagline = 'For all your service and replacement requirements!';
+    
+    var getInfo = function () {
+    Customers.get()
+      .success(function(data) {
+        $scope.customers = data;
+          
+        for (var i = 0; i < data.length; i++){
+        
+            if (data[i].Location[0] !== 0 && data[i].Location[1] !== 0 )
+            {
+                createMarker(data[i]);
+            }
+        }        
+    });
+    };
     
     var mapOptions = {
         center: new google.maps.LatLng(0, 0),
@@ -42,20 +24,28 @@ angular.module('ribs.controller.main', ['google-maps']).controller('MainControll
     // maps stuff from 
 
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
     $scope.markers = [];
     
-    var infoWindow = new google.maps.InfoWindow();
+    var infoWindow = new google.maps.InfoWindow({
+        maxWidth: 400
+    });
     
     var createMarker = function (info){
+        console.log(info);
+        var hospitalName = info.HospitalName;
+        var city = info.City;
+        var country = info.CountryName;
+    
         var marker = new google.maps.Marker({
             map: $scope.map,
-            position: new google.maps.LatLng(info.lat, info.long),
-            title: info.city
+            position: new google.maps.LatLng(info.Location[0], info.Location[1]),
+            title: info.HospitalName
         });
-        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+        
+        marker.content = '<div class="infoWindowContent">' + info.City + ', ' + info.CountryName +  '</br>Location: ' + info.Location + ' </div>';
         
         google.maps.event.addListener(marker, 'click', function(){
+        
             infoWindow.setContent('<b>' + marker.title + '</b>' + marker.content);
             infoWindow.open($scope.map, marker);
         });
@@ -63,13 +53,10 @@ angular.module('ribs.controller.main', ['google-maps']).controller('MainControll
         $scope.markers.push(marker);
     }; 
     
-    for (i = 0; i < cities.length; i++){
-        createMarker(cities[i]);
-    }
-
     $scope.openInfoWindow = function(e, selectedMarker){
         e.preventDefault();
         google.maps.event.trigger(selectedMarker, 'click');
     }; 
     
+    getInfo();
 }]);
