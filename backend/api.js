@@ -9,7 +9,7 @@ var Materials = require('./models/materialtype');
 var Material = require('./models/material');
 var UniqueDevice = require('./models/uniquedevice');
 var FRUs = require('./models/frutype');
-var Order = require('./actions/order');
+var Order = require('./models/order');
 
 module.exports = function(application) {
     application.get('/api/customers', function(request, result) {
