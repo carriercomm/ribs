@@ -12,8 +12,8 @@ angular.module('ribs.controller.customer', []).controller('CustomerController', 
             $scope.formData = {};
             $scope.customers = data;
         });
-    };
-
+    }; 
+    
     $scope.deleteCustomer = function(customer) {
       Customers.delete(customer._id)
         .success(function(data) {

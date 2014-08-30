@@ -1,3 +1,20 @@
 body {
   padding-top: 50px;
 }
+
+.map
+{ 
+    height: 700px; 
+}
+
+#map
+{ 
+    height: 700px; 
+}
+
+.infoWindowContent {
+    font-size: 12px;
+    border-top: 1px solid #ccc;
+    width:200px;
+    height:60px;
+}

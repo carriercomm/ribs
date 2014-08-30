@@ -12,6 +12,10 @@ angular.module('ribs.service.customer', []).factory('Customers', ['$http', funct
             return $http.post('/api/customers', customerData);
         },
 
+        update: function(customerData) {
+            return $http.post('/api/customers/' + customerData._id , customerData);
+        },        
+        
         delete: function(customerID) {
             return $http.delete('/api/customers/' + customerID);
         }
