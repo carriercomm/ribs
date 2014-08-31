@@ -40,7 +40,12 @@ module.exports = function(application) {
     });
 
     application.post('/api/customers/:customer_id', function(request, result) {
-        Customer.findByIdAndUpdate( request.params.customer_id, request.body, function(error, customer) {
+        var customerToUpdate = request.body;
+        
+        //remove the customer id so that it is not updated?
+        delete customerToUpdate._id;
+        console.log("request to update customer with following info: " + customerToUpdate);
+        Customer.findByIdAndUpdate( request.params.customer_id, customerToUpdate, function(error, customer) {
             if (error) { 
 				result.send(error); 
 			}

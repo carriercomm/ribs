@@ -7,6 +7,7 @@ angular.module('ribs.controller.main', ['google-maps']).controller('MainControll
         $scope.customers = data;
         
         var nrOfSystemMarkersOnMap = 0;
+        var nrOfSystemsWithFRUReplacements = 0;
         for (var i = 0; i < data.length; i++){
             var customer = data[i];
             // hack to fill database..
@@ -26,14 +27,28 @@ angular.module('ribs.controller.main', ['google-maps']).controller('MainControll
                 }
              }      
             else
-            {
-                createMarker(data[i]);
+            { 
+                // Hack: should come from database of course
+                var nrOfReplacementsDone = 0;
+                
+                if (nrOfSystemMarkersOnMap % 5 === 0)
+                {
+                    nrOfSystemsWithFRUReplacements++;
+                    nrOfReplacementsDone = 1;
+                }
+                else if (nrOfSystemMarkersOnMap % 17 === 0)
+                {
+                    nrOfSystemsWithFRUReplacements++;
+                    nrOfReplacementsDone = 5;
+                }
+            
+                createMarker(data[i], nrOfReplacementsDone);
                 nrOfSystemMarkersOnMap++;
             }
 
         }  
         
-        $scope.tagline = 'For all your service and replacement requirements! Nr of systems on map:' + nrOfSystemMarkersOnMap;
+        $scope.tagline = 'Nr of systems on map: ' + nrOfSystemMarkersOnMap + '. Nr of systems with FRU replacements:' + nrOfSystemsWithFRUReplacements;
     });
     };
     
@@ -71,19 +86,33 @@ angular.module('ribs.controller.main', ['google-maps']).controller('MainControll
     
     };
     
-    var createMarker = function (info){
+    var createMarker = function (info, nrOfReplacementsDone){
         console.log(info);
         var hospitalName = info.HospitalName;
         var city = info.City;
         var country = info.CountryName;
-    
+      
         var marker = new google.maps.Marker({
             map: $scope.map,
             position: new google.maps.LatLng(info.Location[0], info.Location[1]),
             title: info.HospitalName
         });
         
-        marker.content = '<div class="infoWindowContent">' + info.City + ', ' + info.CountryName + '</div>';
+        if (nrOfReplacementsDone >= 5) {
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+            
+        } 
+        else { 
+            if  (nrOfReplacementsDone >= 1)  {
+                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+            }
+            else
+            {
+               marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+            }
+        }
+        
+        marker.content = '<div class="infoWindowContent">' + info.City + ', ' + info.CountryName + '</BR>Nr of FRU replacements:' + nrOfReplacementsDone + '</div>';      
         
         google.maps.event.addListener(marker, 'click', function(){
             infoWindow.setContent('<b>' + marker.title + '</b></BR>' + marker.content);
