@@ -22,29 +22,29 @@ module.exports = function(application) {
     application.get('/api/customers/:customer_id', function(request, result) {
         Customer.findOne({ _id : request.params.customer_id }, function(error, customer) {
             if (error) { result.send(error); }
-            var output = {};
-            Ownership.find({ HospitalName : customer.HospitalName }, function(error, ownership) {
-                var serialNumbers = [];
-                for (var i in ownership) {
-                    serialNumbers.push(ownership[i].SerialNumber_System);
-                }
+            else {
+                var output = {};
+                Ownership.find({ HospitalName : customer.HospitalName }, function(error, ownership) {
+                    var serialNumbers = [];
+                    for (var i in ownership) {
+                        serialNumbers.push(ownership[i].SerialNumber_System);
+                    }
 
-                System.where('SerialNumber_System').in(serialNumbers).exec(function(error, system) {
-                    var foundResult = { customer: customer, systems: system };
-                    result.json(foundResult);
+                    System.where('SerialNumber_System').in(serialNumbers).exec(function(error, system) {
+                        var foundResult = { customer: customer, systems: system };
+                        result.json(foundResult);
+                    });
                 });
-            });
+            }
         });
     });
 
     application.post('/api/customers/:customer_id', function(request, result) {
         Customer.findByIdAndUpdate( request.params.customer_id, request.body, function(error, customer) {
             if (error) { 
-				console.log(error);
 				result.send(error); 
 			}
             else {
-                console.log(customer);
                 result.json(customer);
             }
         });
