@@ -1,4 +1,4 @@
-angular.module('ribs.controller.main', ['google-maps']).controller('MainController', ['$scope', '$routeParams', 'Customers', function($scope, $routeParams, Customers) {
+angular.module('ribs.controller.main', ['google-maps']).controller('MainController', ['$scope', '$routeParams', 'Customers', 'Materials', function($scope, $routeParams, Customers, Materials) {
     $scope.tagline = 'For all your service and replacement requirements!';
     
     var getInfo = function () {
@@ -26,14 +26,15 @@ angular.module('ribs.controller.main', ['google-maps']).controller('MainControll
                 }
              }      
             else
-            {
-                createMarker(data[i]);
+            { 
+                // Uglyuglyugly many http calls to fill the map with markers
+                getNrOfMaterialPlacementsCreateMarker(data[i], i);
                 nrOfSystemMarkersOnMap++;
             }
 
         }  
         
-        $scope.tagline = 'For all your service and replacement requirements! Nr of systems on map:' + nrOfSystemMarkersOnMap;
+        $scope.tagline = 'Nr of systems on map: ' + nrOfSystemMarkersOnMap;
     });
     };
     
@@ -71,27 +72,92 @@ angular.module('ribs.controller.main', ['google-maps']).controller('MainControll
     
     };
     
-    var createMarker = function (info){
+    var createMarker = function (info, nrOfReplacementsDone, systemSerialId){
         console.log(info);
         var hospitalName = info.HospitalName;
         var city = info.City;
         var country = info.CountryName;
-    
+      
         var marker = new google.maps.Marker({
             map: $scope.map,
             position: new google.maps.LatLng(info.Location[0], info.Location[1]),
-            title: info.HospitalName
+            title: info.HospitalName, 
+            sysId: systemSerialId
         });
         
-        marker.content = '<div class="infoWindowContent">' + info.City + ', ' + info.CountryName + '</div>';
+        if (nrOfReplacementsDone >= 90) {
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+            
+        } 
+        else { 
+            if  (nrOfReplacementsDone >= 65)  {
+                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+            }
+            else
+            {
+               marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+            }
+        }
+        
+        marker.content = '<div class="infoWindowContent">' + info.City + ', ' + info.CountryName + '</BR>Nr of Material replacements:' + nrOfReplacementsDone + '</div>';      
         
         google.maps.event.addListener(marker, 'click', function(){
             infoWindow.setContent('<b>' + marker.title + '</b></BR>' + marker.content);
             infoWindow.open($scope.map, marker);
+            
+            showMaterialPlacements(marker.sysId, info.HospitalName);
         });
+        
         
         $scope.markers.push(marker);
     }; 
+    
+    var getNrOfMaterialPlacementsCreateMarker = function (custData, systemSerialId) {
+        Materials.get(systemSerialId)
+            .success(function(data) {
+            
+            console.log('received materialplacements for systemSerialId: ' + systemSerialId + ' nr of items: ' + data.length);
+            createMarker(custData, data.length, systemSerialId);
+        });
+        
+
+    };    
+    
+    var showMaterialPlacements = function (systemId, hospitalName) {
+        Materials.get(systemId)
+            .success(function(data) {
+            
+            console.log('received materialplacements for systemId: '  + systemId + ' nr of items: ' + data.length + 'creating table');
+            var textTable = '<table class="table"><tr><th>MaterialNumber</th><th>Placed Date</th><th>Removed Date</th></tr>';
+            
+            var nrOfSystemMarkersOnMap = 0;
+            var nrOfSystemsWithFRUReplacements = 0;
+            for (var i = 0; i < data.length; i++){
+                var materialPlacement = data[i];
+                
+                var placedDateStr = '-';
+                if (materialPlacement.PlacedDate !== null)
+                {
+                    var d = new Date(materialPlacement.PlacedDate);
+                    placedDateStr = d.toDateString() + ' ' + d.toTimeString();
+                }
+ 
+                var removedDateStr = '-';
+                if (materialPlacement.RemovedDate !== null)
+                {
+                    removedDateStr = materialPlacement.RemovedDate.toDateString() + ' ' + materialPlacement.RemovedDate.toTimeString();
+                } 
+                
+                textTable += '<tr><td>' + materialPlacement.MaterialNumber + '</td><td>' + placedDateStr + '</td><td>' + removedDateStr + '</td></tr>';
+            }
+           
+            textTable += '</table>';
+            divWidget = document.getElementById('customermaterialdata').innerHTML = '</BR></BR><p>Nr of materialplacements for hospital ' + hospitalName + ': ' + data.length + '</BR>' + textTable;
+           
+        });
+        
+
+    };
     
     $scope.openInfoWindow = function(e, selectedMarker){
         e.preventDefault();

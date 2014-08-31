@@ -4,6 +4,8 @@ angular.module('ribs.controller.customer', []).controller('CustomerController', 
     Customers.get()
       .success(function(data) {
         $scope.customers = data;
+        
+        $scope.tagNrCustomersInfo = 'Nr of customers: ' + data.length;
       });
 
     $scope.createCustomer = function() {
