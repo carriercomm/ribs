@@ -8,6 +8,8 @@ var MaterialPlacement = require('./models/materialplacement');
 var Materials = require('./models/materialtype');
 var Material = require('./models/material');
 var UniqueDevice = require('./models/uniquedevice');
+var FRUs = require('./models/frutype');
+var Order = require('./models/order');
 
 module.exports = function(application) {
     application.get('/api/customers', function(request, result) {
@@ -123,5 +125,84 @@ module.exports = function(application) {
             if (error) result.send(error);
             result.json(uniquedevice);
         });
+    });    
+
+    application.get('/api/actions/order_fru', function(request, result) {
+
+    		var materialNumber = request.query.MaterialNumber;
+    		    	
+				FRUs.findOne({"MaterialNumber": materialNumber}, 'FRUNumber', function(error, frunumber) {
+					if (error) { result.send(error); }
+          
+					var orderDate = new Date()
+					var serialNumber_System = request.query.SerialNumber_System;
+          
+					Order.create({
+					    fruNumber: frunumber,
+					    SerialNumber_System: serialNumber_System,
+					    OrderDate: orderDate,
+					    DeliverDate: null
+	        }, function(error, part) {
+	            if (error) {
+	                result.json({ error: error });
+	            } else {
+	                Order.find(function(error, order) {
+	                    if (error) result.send(error);
+	                    result.json(order);
+	                });
+	            }
+	        });
+			  });
+        
+    });    
+
+	  application.get('/api/actions/place_material', function(request, result) {
+
+				var placeDate = new Date()
+
+				MaterialPlacement.findOne({ $and:[ {"MaterialNumber": request.query.MaterialNumber}, {"SerialNumber_System": request.query.SerialNumber_System}]}, '_id', function(error, id) {
+					if (error) { result.send(error); }
+					if(!id) {				
+						MaterialPlacement.create({
+						    MaterialNumber: materialNumber,
+						    SerialNumber_System: serialNumber_System,
+						    SerialNumber_Material: serialNumber_Material,
+						    PlacedDate: placeDate 
+		        }, function(error, newmaterialplacement) {
+		            if (error) {
+		                result.json({ error: error });
+		            } else {
+		                MaterialPlacement.find(function(error, newmaterialplacement) {
+		                    if (error) result.send(newmaterialplacement);
+		                    result.json(newmaterialplacement);
+		                });
+		            }
+		        });
+		      }
+		      else
+	      	{
+					MaterialPlacement.update ({_id: id}, {$set: {PlacedDate: placeDate }}, function (err, materialplacement) {
+					  if (err) return handleError(err);
+					  result.json(materialplacement);
+					});
+					}
+			  });
+        
+    });    
+	  application.get('/api/actions/remove_material', function(request, result) {
+
+				var removedDate = new Date()
+
+				MaterialPlacement.findOne({ $and:[ {"MaterialNumber": request.query.MaterialNumber}, {"SerialNumber_System": request.query.SerialNumber_System}]}, '_id', function(error, id) {
+					if (error) { result.send(error); }
+	
+					if(id) {				
+						MaterialPlacement.update ({_id: id}, {$set: {RemovedDate: removedDate}}, function (err, materialplacement) {
+						  if (err) return handleError(err);
+						  result.json(materialplacement);
+						});
+					}
+			  });
+        
     });    
 }
