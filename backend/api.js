@@ -169,9 +169,9 @@ module.exports = function(application) {
 					if (error) { result.send(error); }
 					if(!id) {				
 						MaterialPlacement.create({
-						    MaterialNumber: materialNumber,
-						    SerialNumber_System: serialNumber_System,
-						    SerialNumber_Material: serialNumber_Material,
+						    MaterialNumber: request.query.MaterialNumber,
+						    SerialNumber_System: request.query.SerialNumber_System,
+						    SerialNumber_Material: request.query.SerialNumber_Material,
 						    PlacedDate: placeDate 
 		        }, function(error, newmaterialplacement) {
 		            if (error) {
@@ -179,7 +179,7 @@ module.exports = function(application) {
 		            } else {
 		                MaterialPlacement.find(function(error, newmaterialplacement) {
 		                    if (error) result.send(newmaterialplacement);
-		                    result.json(newmaterialplacement);
+		                    result.redirect ("/");
 		                });
 		            }
 		        });
@@ -188,7 +188,7 @@ module.exports = function(application) {
 	      	{
 					MaterialPlacement.update ({_id: id}, {$set: {PlacedDate: placeDate }}, function (err, materialplacement) {
 					  if (err) return handleError(err);
-					  result.json(materialplacement);
+		                    result.redirect ("/");
 					});
 					}
 			  });
